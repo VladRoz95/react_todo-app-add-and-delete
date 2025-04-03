@@ -4,14 +4,12 @@ import React from 'react';
 
 type Props = {
   filteredTodo: Todo[];
-  todoStatusChange: (todos: Todo) => void;
   removeTodo: (id: number) => void;
   loadingTodo: number[];
 };
 
 export const TodoList: React.FC<Props> = ({
   filteredTodo,
-  todoStatusChange,
   removeTodo,
   loadingTodo,
 }) => {
@@ -21,7 +19,6 @@ export const TodoList: React.FC<Props> = ({
         return (
           <TodoItem
             key={todo.id}
-            todoStatusChange={todoStatusChange}
             removeTodo={removeTodo}
             todos={todo}
             loadingTodo={loadingTodo}

@@ -144,46 +144,6 @@ export const App: React.FC = () => {
     );
   }, [handleErrorMessages, todos]);
 
-  const todoStatusChange = useCallback(
-    (updatedTodo: Todo) => {
-      setLoadingTodo(prev => [...prev, updatedTodo.id]);
-      todoService
-        .updateTodo(updatedTodo)
-        .then(todo => {
-          setTodos(currentTodo => {
-            return currentTodo.map(el => (todo.id === el.id ? todo : el));
-          });
-        })
-        .catch(() => {
-          setLoadingTodo(loadingTodo.filter(id => id !== updatedTodo.id));
-          handleErrorMessages(ErrorMessage.UPDATE);
-        })
-        .finally(() => {
-          setLoadingTodo(idis => idis.filter(id => id !== updatedTodo.id));
-        });
-    },
-    [handleErrorMessages, loadingTodo],
-  );
-
-  const changeCompletedTodos = useCallback(() => {
-    const allCompleted = todos.every(todo => todo.completed);
-
-    const updatedTodo = todos.map(todo => ({
-      ...todo,
-      completed: !allCompleted,
-    }));
-
-    setTodos(updatedTodo);
-    setLoadingTodo(todos.map(todo => todo.id));
-
-    Promise.all(updatedTodo.map(todo => todoService.updateTodo(todo)))
-      .catch(() => {
-        handleErrorMessages(ErrorMessage.UPDATE);
-        setTodos(todos);
-      })
-      .finally(() => setLoadingTodo([]));
-  }, [todos, handleErrorMessages]);
-
   if (!todoService.USER_ID) {
     return <UserWarning />;
   }
@@ -195,7 +155,6 @@ export const App: React.FC = () => {
       <div className="todoapp__content">
         <Header
           todos={todos}
-          changeCompletedTodos={changeCompletedTodos}
           addTodo={addTodo}
           query={query}
           setQuery={setQuery}
@@ -206,7 +165,6 @@ export const App: React.FC = () => {
           <>
             <TodoList
               filteredTodo={filteredTodo}
-              todoStatusChange={todoStatusChange}
               removeTodo={removeTodo}
               loadingTodo={loadingTodo}
             />

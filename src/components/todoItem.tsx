@@ -7,26 +7,15 @@ import classNames from 'classnames';
 
 type Props = {
   todos: Todo;
-  todoStatusChange: (todos: Todo) => void;
   removeTodo: (id: number) => void;
   loadingTodo: number[];
 };
 
 export const TodoItem: React.FC<Props> = ({
   todos,
-  todoStatusChange,
   removeTodo,
   loadingTodo,
 }) => {
-  const onChange = () => {
-    todoStatusChange({
-      id: todos.id,
-      title: todos.title,
-      userId: todos.userId,
-      completed: !todos.completed,
-    });
-  };
-
   return (
     <div
       data-cy="Todo"
@@ -39,7 +28,6 @@ export const TodoItem: React.FC<Props> = ({
           type="checkbox"
           className="todo__status"
           checked={todos.completed}
-          onChange={onChange}
         />
       </label>
 

@@ -5,7 +5,6 @@ import { USER_ID } from '../api/todos';
 
 type Props = {
   todos: Todo[];
-  changeCompletedTodos: () => void;
   addTodo: (newTodo: Todo) => void;
   setQuery: (query: string) => void;
   query: string;
@@ -14,7 +13,6 @@ type Props = {
 
 export const Header: React.FC<Props> = ({
   todos,
-  changeCompletedTodos,
   addTodo,
   setQuery,
   query,
@@ -45,7 +43,6 @@ export const Header: React.FC<Props> = ({
           active: todos.every(todo => todo.completed),
         })}
         data-cy="ToggleAllButton"
-        onClick={changeCompletedTodos}
       />
 
       {/* Add a todo on form submit */}
